@@ -46,4 +46,17 @@ public class ProductoServiceImpl implements ProductoService{
 		return this.productoRepository.seleccionarProductosDinamico(fecha, stock, precio);
 	}
 
+	@Override
+	public int borrarPorFechaVencimiento(LocalDateTime fecha) {
+		// TODO Auto-generated method stub
+		return this.productoRepository.eliminarPorFechaVencimiento(fecha);
+	}
+
+	@Override
+	public int borrarPorIntervaloFechaFabricacion(Integer stock, LocalDateTime fechaFabricacionInicio,
+			LocalDateTime fechaFabricacionFin) {
+		// TODO Auto-generated method stub
+		return this.productoRepository.actualizarPorIntervaloFechaFabricacion(stock, fechaFabricacionInicio, fechaFabricacionFin);
+	}
+
 }

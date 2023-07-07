@@ -12,8 +12,12 @@ public interface ProductoService {
 	public Producto buscarPorID(int id);
 	public void actualizar(Producto producto);
 	
-	//evaluar si la fecha de vencimientoto >= fecha actual, utilice el AND para buscar stock >10 y precio <3.50,
-	//si no utilice OR
+	
 	public List<Producto> buscarProductosDinamico(LocalDateTime fecha,Integer stock,BigDecimal precio);
+	
+	public int borrarPorFechaVencimiento(LocalDateTime fecha);
+	
+	
+	public int borrarPorIntervaloFechaFabricacion(Integer stock,LocalDateTime fechaFabricacionInicio,LocalDateTime fechaFabricacionFin);
 
 }

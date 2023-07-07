@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.repository.modelo.Producto;
-import com.example.demo.repository.modelo.Producto;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -79,6 +79,28 @@ public class ProductoRepositoryImpl implements ProductoRepository{
 
 		TypedQuery<Producto> myQueryFinal = this.entityManager.createQuery(myCriteriAQuery);
 		return myQueryFinal.getResultList();
+	}
+
+	@Override
+	public int eliminarPorFechaVencimiento(LocalDateTime fecha) {
+		Query miQuery = this.entityManager.createQuery("DELETE FROM Producto p Where p.fechaVencimiento>=:datoFecha");
+		miQuery.setParameter("datoFecha", fecha);
+
+		//numero de registros afectados
+		return miQuery.executeUpdate();
+	}
+
+	
+
+	@Override
+	public int actualizarPorIntervaloFechaFabricacion(Integer stock, LocalDateTime fechaFabricacionInicio,
+			LocalDateTime fechaFabricacionFin) {
+		Query miQuery = this.entityManager.createQuery("UPDATE Producto p SET p.stock=:datoStock WHERE p.fechaFabricacion"
+				+ " BETWEEN :datoFechaFabricacionInicio AND :datoFechaFabricacionFin ");
+		miQuery.setParameter("datoStock",stock);
+		miQuery.setParameter("datoFechaFabricacionInicio",  fechaFabricacionInicio);
+		miQuery.setParameter("datoFechaFabricacionFin",  fechaFabricacionFin);
+	    return	miQuery.executeUpdate();
 	}
 	
 

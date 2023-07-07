@@ -40,18 +40,11 @@ public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 
 		//productoService.guardar(p1);
 		
+		int n=this.productoService.borrarPorIntervaloFechaFabricacion(10, LocalDateTime.of(2021,01,1,1,5), LocalDateTime.of(2021,12,30,3,4));
+		System.err.println(n);
+		int n1=this.productoService.borrarPorFechaVencimiento(LocalDateTime.now());
+		System.err.println(n);
 		
-		//AND
-		List<Producto> reporte=this.productoService.buscarProductosDinamico(LocalDateTime.of(2023, 4,5,1,5), 10, new BigDecimal(3));
-		
-		for(Producto p:reporte) {
-			System.out.println(p);
-		}
-		//OR
-		List<Producto> reporte2=this.productoService.buscarProductosDinamico(LocalDateTime.of(2023, 12,5,1,5), 10, new BigDecimal(3));
-		for(Producto p:reporte2) {
-			System.out.println(p);
-		}
 	}
 
 }
