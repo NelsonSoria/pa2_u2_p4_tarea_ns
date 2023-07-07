@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.demo.repository.modelo.Producto;
 import com.example.demo.repository.modelo.Vehiculo;
+import com.example.demo.service.ProductoService;
 import com.example.demo.service.VehiculoService;
 
 @SpringBootApplication
 public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 
 	@Autowired
-	private VehiculoService vehiculoservice;
+	private ProductoService productoService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U2P4NsJeApplication.class, args);
@@ -24,36 +27,31 @@ public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Vehiculo v1 = new Vehiculo();
-		v1.setColor("Azul");
-		v1.setMarca("Chevrolet");
-		v1.setModelo("Aveo");
-		v1.setPrecio(new BigDecimal(10000));
-		v1.setFechaFabricacion(LocalDate.of(2015, 1, 10));
-		// this.vehiculoservice.guardar(v1);
+		
+		
+		//CREACION DE PRODUCTOS
+		Producto p1= new Producto();
+		p1.setCodigo("A003");
+		p1.setNombre("Atun");
+		p1.setPrecio(new BigDecimal(1.24));
+		p1.setFechaFabricacion(LocalDateTime.of(2021,5,7,2,3));
+		p1.setFechaVencimiento(LocalDateTime.of(2023,4,13,5,3));
+		p1.setStock(15);
 
-		// Ejemplo de Query con single result
-		Vehiculo vEncontrado1 = this.vehiculoservice.buscarPorMarcaModeloYColor("BMW", "Serie3", "Negro");
-		System.out.println(vEncontrado1);
+		//productoService.guardar(p1);
 		
 		
-		// Ejemplo de Query con result list
-		List<Vehiculo> misVehiculos = this.vehiculoservice.reporteListaPorColorYMayorIgualQueFecha("Negro",
-				LocalDate.of(2010, 1, 1));
-		for (Vehiculo v : misVehiculos) {
-			System.out.println(v);
+		//AND
+		List<Producto> reporte=this.productoService.buscarProductosDinamico(LocalDateTime.of(2023, 4,5,1,5), 10, new BigDecimal(3));
+		
+		for(Producto p:reporte) {
+			System.out.println(p);
 		}
-		
-		//Ejemplo de TypedQuery con single result
-		Vehiculo vEncontrado2 = this.vehiculoservice.buscarPorMarcaYModeloTyped("Chevrolet", "Aveo");
-		System.out.println(vEncontrado2);
-
-		//Ejemplo de TypedQuery con result list
-		List<Vehiculo> misVehiculos2 = this.vehiculoservice.reporteListaPorMenorIgualDePrecio(new BigDecimal(50000));
-		for (Vehiculo v : misVehiculos2) {
-			System.out.println(v);
+		//OR
+		List<Producto> reporte2=this.productoService.buscarProductosDinamico(LocalDateTime.of(2023, 12,5,1,5), 10, new BigDecimal(3));
+		for(Producto p:reporte2) {
+			System.out.println(p);
 		}
-
 	}
 
 }

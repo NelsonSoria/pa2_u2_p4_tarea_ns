@@ -15,11 +15,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-
 @Entity
-
 @Table(name="empleado")
-
 public class Empleado {
 	
 
